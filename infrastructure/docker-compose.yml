@@ -8,7 +8,7 @@ services:
       - "5000:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - SPACEPORT_ConnectionStrings__DefaultConnection=Host=postgres;Database=cosmos;Username=admin;Password=password
+      - SPACEPORT_ConnectionStrings__DefaultConnection=Host=postgres;Database=blackhole;Username=admin;Password=password
       - SPACEPORT_ApplicationSettings__RequireHttps=false
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost:8080/health"]
@@ -25,7 +25,7 @@ services:
     environment:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=cosmos
+      - POSTGRES_DB=blackhole
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
