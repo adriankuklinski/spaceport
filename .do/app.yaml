@@ -1,4 +1,4 @@
-name: cortex
+name: cosmos
 region: nyc
 services:
   - name: spaceport

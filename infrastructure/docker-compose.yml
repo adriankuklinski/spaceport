@@ -8,7 +8,7 @@ services:
       - "5000:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - SPACEPORT_ConnectionStrings__DefaultConnection=Host=postgres;Database=spaceport;Username=admin;Password=password
+      - SPACEPORT_ConnectionStrings__DefaultConnection=Host=postgres;Database=cosmos;Username=admin;Password=password
       - SPACEPORT_ApplicationSettings__RequireHttps=false
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost:8080/health"]

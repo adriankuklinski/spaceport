@@ -1,6 +1,6 @@
 # Spaceport
 
-Spaceport is the central API service of the Cortex system, designed to fetch data from third-party APIs and share it with other microservices.
+Spaceport is the central API service of the Cosmos system, designed to fetch data from third-party APIs and share it with other microservices.
 
 ## Project Structure
 

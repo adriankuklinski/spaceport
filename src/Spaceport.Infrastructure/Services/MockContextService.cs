@@ -23,7 +23,7 @@ public class MockContextService : IContextService
         {
             Id = Guid.NewGuid(),
             Title = "Implement Spaceport API",
-            Description = "Create the core API for the Cortex system",
+            Description = "Create the core API for the Cosmos system",
             Type = WorkItemType.UserStory,
             State = WorkItemState.Active,
             CreatedAt = DateTime.UtcNow.AddDays(-1),
@@ -43,7 +43,7 @@ public class MockContextService : IContextService
         {
             Id = Guid.NewGuid(),
             Title = "Design Database Schema",
-            Description = "Create the database schema for the Cortex system",
+            Description = "Create the database schema for the Cosmos system",
             Type = WorkItemType.Task,
             State = WorkItemState.New,
             CreatedAt = DateTime.UtcNow.AddDays(-2)

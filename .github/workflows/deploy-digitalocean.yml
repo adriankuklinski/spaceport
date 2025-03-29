@@ -27,8 +27,8 @@ jobs:
         file: ./infrastructure/Dockerfile
         push: true
         tags: |
-          registry.digitalocean.com/cortex/spaceport:latest
-          registry.digitalocean.com/cortex/spaceport:${{ github.sha }}
+          registry.digitalocean.com/cosmos/spaceport:latest
+          registry.digitalocean.com/cosmos/spaceport:${{ github.sha }}
     
     - name: Deploy to Digital Ocean App Platform
       run: |
