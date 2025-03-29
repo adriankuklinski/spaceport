@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -13,6 +14,13 @@ public class Program
         {
             Console.WriteLine("Starting Spaceport API");
             var builder = WebApplication.CreateBuilder(args);
+            
+            // Configure with environment variables and JSON
+            builder.Configuration
+                .AddJsonFile("appsettings.json", optional: false)
+                .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables("SPACEPORT_")
+                .AddCommandLine(args);
 
             // Add services from API project
             var app = API.Startup.ConfigureApp(args);

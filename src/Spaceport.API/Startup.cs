@@ -38,6 +38,9 @@ public static class Startup
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         
+        // Add Health Checks
+        builder.Services.AddHealthChecks();
+        
         // Add Serilog
         builder.Host.UseSerilog((context, services, configuration) => configuration
             .ReadFrom.Configuration(context.Configuration)
@@ -74,6 +77,9 @@ public static class Startup
         app.UseHttpsRedirection();
         app.UseAuthorization();
         app.MapControllers();
+        
+        // Map health check endpoint
+        app.MapHealthChecks("/health");
     }
 
     private static void RegisterDomainServices(IServiceCollection services)

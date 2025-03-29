@@ -1,0 +1,36 @@
+name: Deploy to Digital Ocean
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Install doctl
+      uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+    
+    - name: Log in to DO Container Registry
+      run: doctl registry login --expiry-seconds 1200
+    
+    - name: Build and push
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        file: ./infrastructure/Dockerfile
+        push: true
+        tags: |
+          registry.digitalocean.com/cortex/spaceport:latest
+          registry.digitalocean.com/cortex/spaceport:${{ github.sha }}
+    
+    - name: Deploy to Digital Ocean App Platform
+      run: |
+        # Update the app spec with the new image
+        doctl apps update ${{ secrets.DO_APP_ID }} --spec .do/app.yaml

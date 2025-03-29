@@ -1,0 +1,29 @@
+name: cortex
+region: nyc
+services:
+  - name: spaceport
+    github:
+      branch: master
+      deploy_on_push: true
+      repo: YourUsername/Spaceport
+    http_port: 8080
+    instance_count: 1
+    instance_size_slug: basic-xxs
+    source_dir: /
+    dockerfile_path: infrastructure/Dockerfile
+    health_check:
+      http_path: /health
+    routes:
+      - path: /api
+    envs:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: SPACEPORT_ApplicationSettings__RequireHttps
+        value: "false"
+
+databases:
+  - engine: PG
+    name: spaceport-db
+    num_nodes: 1
+    size: db-s-dev-database
+    version: "15"
