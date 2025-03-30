@@ -5,7 +5,7 @@ services:
     github:
       branch: master
       deploy_on_push: true
-      repo: YourUsername/Spaceport
+      repo: adriankuklinski/Spaceport
     http_port: 8080
     instance_count: 1
     instance_size_slug: basic-xxs
@@ -20,10 +20,17 @@ services:
         value: Production
       - key: SPACEPORT_ApplicationSettings__RequireHttps
         value: "false"
+      # Add this environment variable to connect to your managed database
+      # The actual value will be set in the Digital Ocean dashboard or linked automatically
+      - key: SPACEPORT_ConnectionStrings__DefaultConnection
+        scope: RUN_AND_BUILD_TIME
+        value: ${blackhole.DATABASE_URL}
 
 databases:
+  # This section lets Digital Ocean know you want to use a managed database
+  # You can either create it through this config or link an existing one
   - engine: PG
     name: blackhole
-    num_nodes: 1
-    size: db-s-dev-database
+    production: true  # This means it's a production database with backups
+    cluster_name: blackhole
     version: "15"
