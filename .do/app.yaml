@@ -1,15 +1,13 @@
-name: cosmos
+name: spaceport
 region: nyc
 services:
   - name: spaceport
-    # Either specify GitHub source
+    github:
+      repo: adriankuklinski/spaceport
+      branch: master
+      deploy_on_push: true
     source_dir: /
     dockerfile_path: infrastructure/Dockerfile
-    # Or specify a prebuilt image (if using GitHub Actions to build)
-    # image:
-    #   registry_type: DOCR
-    #   repository: cosmos/spaceport
-    #   tag: latest
     http_port: 8080
     instance_count: 1
     instance_size_slug: basic-xxs
@@ -24,13 +22,8 @@ services:
         value: Production
       - key: SPACEPORT_ApplicationSettings__RequireHttps
         value: "false"
-
-# For connecting to an existing database you've already created:
-# database_ref: your-database-name
-
-# Or let App Platform create a new database:
 databases:
   - engine: PG
     name: blackhole
-    production: false  # Switch to true for production workloads
+    production: false
     version: "15"
