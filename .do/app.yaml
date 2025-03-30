@@ -2,35 +2,35 @@ name: cosmos
 region: nyc
 services:
   - name: spaceport
-    github:
-      branch: master
-      deploy_on_push: true
-      repo: adriankuklinski/Spaceport
+    # Either specify GitHub source
+    source_dir: /
+    dockerfile_path: infrastructure/Dockerfile
+    # Or specify a prebuilt image (if using GitHub Actions to build)
+    # image:
+    #   registry_type: DOCR
+    #   repository: cosmos/spaceport
+    #   tag: latest
     http_port: 8080
     instance_count: 1
     instance_size_slug: basic-xxs
-    source_dir: /
-    dockerfile_path: infrastructure/Dockerfile
     health_check:
       http_path: /health
+      initial_delay_seconds: 10
+      period_seconds: 30
     routes:
-      - path: /api
+      - path: /
     envs:
       - key: ASPNETCORE_ENVIRONMENT
         value: Production
       - key: SPACEPORT_ApplicationSettings__RequireHttps
         value: "false"
-      # Add this environment variable to connect to your managed database
-      # The actual value will be set in the Digital Ocean dashboard or linked automatically
-      - key: SPACEPORT_ConnectionStrings__DefaultConnection
-        scope: RUN_AND_BUILD_TIME
-        value: ${blackhole.DATABASE_URL}
 
+# For connecting to an existing database you've already created:
+# database_ref: your-database-name
+
+# Or let App Platform create a new database:
 databases:
-  # This section lets Digital Ocean know you want to use a managed database
-  # You can either create it through this config or link an existing one
   - engine: PG
     name: blackhole
-    production: true  # This means it's a production database with backups
-    cluster_name: blackhole
+    production: false  # Switch to true for production workloads
     version: "15"
